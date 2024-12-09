@@ -1,5 +1,5 @@
 #include "PmergeMe.hpp"
-
+#include <cstdlib>
 
 bool	isInputValid(int ac, char **arg, std::vector<int> &vec, std::deque<int> &deque)
 {
