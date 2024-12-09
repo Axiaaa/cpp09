@@ -8,6 +8,7 @@
 #include <cmath>
 #include <algorithm>
 #include <string>
+#include <cstdlib>
 
 
 using std::string;

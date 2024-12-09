@@ -154,25 +154,22 @@ void BitcoinExchange::printMultipliedValue(std::string const & file) const {
             continue;
         }
         std::map<string, double>::const_iterator it = this->_data.find(date);
-        //Find the closest date
+        // Find the closest lower date
         if (it == this->_data.end()) {
             std::map<string, double>::const_iterator lower = this->_data.lower_bound(date);
-            std::map<string, double>::const_iterator upper = this->_data.upper_bound(date);
             if (lower == this->_data.begin()) {
-                std::cout << "Error: no data available for this date" << std::endl;
-                continue;
+            std::cout << "Error: no data available for this date" << std::endl;
+            continue;
             }
-            if (lower == this->_data.end()) {
-                --lower;
-                it = lower;
-            } else {
-                --lower;
-                if (abs(atoi(lower->first.c_str()) - atoi(date.c_str())) < abs(atoi(upper->first.c_str()) - atoi(date.c_str()))) {
-                    it = lower;
-                } else {
-                    it = upper;
-                }
+            // Move to the closest lower date
+            while (lower != this->_data.begin() && lower->first > date) {
+            --lower;
             }
+            if (lower->first > date) {
+            std::cout << "Error: no data available for this date" << std::endl;
+            continue;
+            }
+            it = lower;
         }
         std::cout << date << " => " << btcCount << " = " << atof(btcCount.c_str()) * it->second << std::endl;
     }
